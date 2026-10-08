@@ -7,35 +7,25 @@ import ar.edu.unju.escmi.tp6.dominio.Factura;
 
 public class CollectionFactura {
 
-	public static List<Factura> facturas = new ArrayList<Factura>();
-
-	
+	public static List<Factura> facturas =
+			new ArrayList<Factura>();
 
 	public static void agregarFactura(Factura factura) {
-		
-		try {
+
+		if (factura != null) {
 			facturas.add(factura);
-		} catch (Exception e) {
-			System.out.println("\nNO SE PUEDE GUARDAR LA FACTURA");
 		}
-		
 	}
 
 	public static Factura buscarFactura(long nroFactura) {
-		Factura facturaEncontrada = null;
-		
-		try {
-			if (facturas != null) {
-				for (Factura fac : facturas) {
-					if (fac.getNroFactura() == nroFactura) {
-						facturaEncontrada = fac;
-					}
-				}
+
+		for (Factura factura : facturas) {
+
+			if (factura.getNroFactura() == nroFactura) {
+				return factura;
 			}
-		} catch (Exception e) {
-			return null;
 		}
-		
-		return facturaEncontrada;
+
+		return null;
 	}
 }

@@ -11,8 +11,9 @@ public class CollectionStock {
 	public static List<Stock> stocks = new ArrayList<Stock>();
 
 	public static void precargarStocks() {
+
 		if (stocks.isEmpty()) {
-			stocks = new ArrayList<Stock>();
+
 			stocks.add(new Stock(12, CollectionProducto.productos.get(0)));
 			stocks.add(new Stock(22, CollectionProducto.productos.get(1)));
 			stocks.add(new Stock(13, CollectionProducto.productos.get(2)));
@@ -37,61 +38,75 @@ public class CollectionStock {
 	}
 
 	public static void agregarStock(Stock stock) {
-		
-		try {
-			if (stocks.isEmpty()) {
-				stocks.add(stock);
-			} else {
-				Producto controlProducto = stock.getProducto();
-				boolean band = true;
-				int i = 0;
 
-				for (Stock sto : stocks) {
-					if (band) {
-						if (controlProducto == sto.getProducto()) {
-							stocks.set(i, stock);
-							band = false;
-						}
-					}
-					i++;
-				}
-				if (band) {
-					stocks.add(stock);
-				}
+		try {
+
+			if (stock == null || stock.getProducto() == null) {
+				return;
 			}
+
+			Stock stockExistente = buscarStock(stock.getProducto());
+
+			if (stockExistente != null) {
+				stockExistente.setCantidad(stock.getCantidad());
+			} else {
+				stocks.add(stock);
+			}
+
 		} catch (Exception e) {
-			System.out.println("\nNO SE PUEDE GUARDAR EL STOCK");
+
+			System.out.println(
+					"\nNO SE PUEDE GUARDAR EL STOCK");
 		}
-		
 	}
 
 	public static void reducirStock(Stock stock, int cantidad) {
-		int i = stocks.indexOf(stock);
-		if (i >= 0) {
-			if (stock.getCantidad() - cantidad >= 0) {
-				stock.setCantidad(stock.getCantidad() - cantidad);
-				stocks.set(i, stock);
-			}
-		} else {
-			System.out.println("\nERROR");
+
+		if (stock == null) {
+			System.out.println(
+					"\nStock no encontrado.");
+			return;
 		}
+
+		if (cantidad <= 0) {
+			System.out.println(
+					"\nLa cantidad debe ser mayor a cero.");
+			return;
+		}
+
+		if (stock.getCantidad() < cantidad) {
+			System.out.println(
+					"\nStock insuficiente.");
+			return;
+		}
+
+		stock.setCantidad(
+				stock.getCantidad() - cantidad);
 	}
 
 	public static Stock buscarStock(Producto producto) {
-		Stock stockTotal = null;
-		
-		try {
-			if (stocks != null) {
-				for (Stock sto : stocks) {
-					if (sto.getProducto() == producto) {
-						stockTotal = sto;
-					}
-				}
-			}
-		} catch (Exception e) {
+
+		if (producto == null) {
 			return null;
 		}
-		
-		return stockTotal;
+
+		try {
+
+			for (Stock stock : stocks) {
+
+				if (stock.getProducto() != null
+						&& stock.getProducto().getCodigo()
+						== producto.getCodigo()) {
+
+					return stock;
+				}
+			}
+
+		} catch (Exception e) {
+
+			return null;
+		}
+
+		return null;
 	}
 }

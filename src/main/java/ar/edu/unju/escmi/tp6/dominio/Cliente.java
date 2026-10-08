@@ -11,21 +11,18 @@ public class Cliente {
 	private String nombre;
 	private String direccion;
 	private String telefono;
-	
-	public Cliente() {
 
+	public Cliente() {
 	}
 
+	public Cliente(long dni, String nombre,
+			String direccion, String telefono) {
 
-	public Cliente(long dni, String nombre, String direccion, String telefono) {
-		super();
 		this.dni = dni;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
 	}
-
-
 
 	public long getDni() {
 		return dni;
@@ -43,7 +40,6 @@ public class Cliente {
 		this.nombre = nombre;
 	}
 
-	
 	public String getDireccion() {
 		return direccion;
 	}
@@ -52,7 +48,6 @@ public class Cliente {
 		this.direccion = direccion;
 	}
 
-	
 	public String getTelefono() {
 		return telefono;
 	}
@@ -62,16 +57,19 @@ public class Cliente {
 	}
 
 	public List<Factura> consultarCompras() {
-		List<Factura> shoppingList = new ArrayList<Factura>();
-		if (CollectionFactura.facturas != null) {
-			for (Factura fac : CollectionFactura.facturas) {
-				if (fac.getCliente().getDni() == this.dni) {
-					shoppingList.add(fac);
-				}
+
+		List<Factura> compras =
+				new ArrayList<Factura>();
+
+		for (Factura factura : CollectionFactura.facturas) {
+
+			if (factura.getCliente() != null
+					&& factura.getCliente().getDni() == this.dni) {
+
+				compras.add(factura);
 			}
-		} else {
-			shoppingList = null;
 		}
-		return shoppingList;
+
+		return compras;
 	}
 }

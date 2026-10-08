@@ -47,29 +47,44 @@ public class Credito {
 	public void setCuotas(List<Cuota> cuotas) {
 		this.cuotas = cuotas;
 	}
-	
+
 	public void generarCuotas() {
-		double montoCuota = this.factura.calcularTotal() / 30;
+
+		cuotas.clear();
+
+		double montoCuota = this.factura.calcularTotal() / 20;
+
 		int nroCuota = 0;
+
 		LocalDate currentDate = LocalDate.now();
 		LocalDate auxDate = LocalDate.now();
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 20; i++) {
+
 			nroCuota++;
+
 			Cuota cuota = new Cuota();
+
 			cuota.setMonto(montoCuota);
 			cuota.setNroCuota(nroCuota);
-			cuota.setFechaGeneracion(currentDate); 
+			cuota.setFechaGeneracion(currentDate);
+
 			auxDate = auxDate.plusMonths(1);
+
 			cuota.setFechaVencimiento(auxDate);
+
 			cuotas.add(cuota);
 		}
-
 	}
 
 	public void mostarCredito() {
-		System.out.println("Tarjeta De Credito: " + tarjetaCredito + "\n" + factura + "\nCant. Cuotas:\n");
-		for(Cuota cuota: cuotas) {
+
+		System.out.println(
+				"Tarjeta De Credito: " + tarjetaCredito
+				+ "\n" + factura
+				+ "\nCant. Cuotas:\n");
+
+		for (Cuota cuota : cuotas) {
 			System.out.println(cuota);
 		}
 	}
