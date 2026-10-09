@@ -1,0 +1,65 @@
+TRABAJO PRÁCTICO N° 6 – PROGRAMACIÓN ORIENTADA A OBJETOS
+
+PUNTO 4 – RESPUESTAS
+
+a) ¿Por qué no se dibuja la relación de agregación entre la clase CollectionProducto y Producto?
+
+Porque la relación ya está representada dentro de CollectionProducto mediante el atributo que almacena una colección de objetos Producto. En el código se utiliza una List<Producto>, por lo que dibujar además una relación de agregación resultaría redundante dentro de este modelo.
+
+b) ¿Cuántos atributos tiene la clase Factura? ¿Cuáles son los nombres de esos atributos?
+
+La clase Factura tiene 4 atributos:
+- fecha
+- nroFactura
+- cliente
+- detalles
+
+Sus tipos son:
+private LocalDate fecha;
+private long nroFactura;
+private Cliente cliente;
+private List<Detalle> detalles;
+
+c) ¿Cómo se llama la relación que se establece entre Factura y Detalle?
+
+La relación entre Factura y Detalle es una composición. Los objetos Detalle forman parte de una Factura y en el diagrama esta relación se representa mediante un rombo negro del lado de Factura.
+
+d) ¿Cómo se llama la relación entre las clases Factura y Cliente?
+
+La relación entre Factura y Cliente es una asociación. La clase Factura posee un atributo de tipo Cliente:
+
+private Cliente cliente;
+
+Esto permite asociar cada factura con el cliente correspondiente.
+
+e) ¿Por qué los atributos de las clases Collections son públicos?
+
+Los atributos de las clases Collections son públicos porque, en el diseño del proyecto, se necesita acceder a las colecciones desde otras clases.
+
+Además, son static, por lo que pertenecen directamente a la clase y pueden utilizarse sin crear una instancia.
+
+Ejemplo:
+CollectionCliente.clientes
+CollectionFactura.facturas
+
+f) Describa las características de todos los métodos de la clase CollectionCliente.
+
+La clase CollectionCliente posee los siguientes métodos:
+
+1. public static void precargarClientes()
+
+Precarga clientes iniciales en la colección. Antes de cargarlos verifica que la lista se encuentre vacía para evitar duplicaciones.
+
+2. public static void agregarCliente(Cliente cliente)
+
+Recibe un objeto Cliente como parámetro y lo agrega a la colección si el objeto no es null.
+
+3. public static Cliente buscarCliente(long dni)
+
+Recibe el DNI de un cliente, recorre la colección y compara el DNI de cada objeto Cliente con el valor recibido.
+
+Si encuentra una coincidencia, devuelve el objeto Cliente correspondiente.
+
+Si no encuentra ningún cliente con ese DNI, devuelve null.
+
+Todos estos métodos son public y static, por lo que pueden ser utilizados desde otras clases sin necesidad de crear un objeto de CollectionCliente.
