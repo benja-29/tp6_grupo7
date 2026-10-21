@@ -63,7 +63,8 @@ public class Cliente {
 
 		for (Factura factura : CollectionFactura.facturas) {
 
-			if (factura.getCliente() != null
+			if (factura != null
+					&& factura.getCliente() != null
 					&& factura.getCliente().getDni() == this.dni) {
 
 				compras.add(factura);
