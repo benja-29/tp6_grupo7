@@ -88,11 +88,11 @@ public class Main {
 		} finally {
 
 			scanner.close();
+
 			System.out.println(
 					"\nScanner cerrado correctamente.");
 		}
 	}
-
 
 	public static void realizarVenta() {
 
@@ -113,17 +113,51 @@ public class Main {
 			return;
 		}
 
-		TarjetaCredito tarjeta =
+		List<TarjetaCredito> tarjetas =
 				CollectionTarjetaCredito
-						.buscarTarjetaPorDni(dni);
+						.buscarTarjetasPorDni(dni);
 
-		if (tarjeta == null) {
+		if (tarjetas.isEmpty()) {
 
 			System.out.println(
-					"\nEl cliente no posee tarjeta.");
+					"\nEl cliente no posee tarjetas.");
 
 			return;
 		}
+
+		System.out.println(
+				"\n===== TARJETAS DEL CLIENTE =====");
+
+		for (int i = 0; i < tarjetas.size(); i++) {
+
+			TarjetaCredito tarjetaActual =
+					tarjetas.get(i);
+
+			System.out.println(
+					(i + 1)
+					+ "- Numero: "
+					+ tarjetaActual.getNumero()
+					+ " | Limite disponible: $"
+					+ tarjetaActual.getLimiteCompra()
+					+ " | Vencimiento: "
+					+ tarjetaActual.getFechaCaducacion());
+		}
+
+		int opcionTarjeta =
+				leerEntero(
+						"Seleccione una tarjeta: ");
+
+		if (opcionTarjeta < 1
+				|| opcionTarjeta > tarjetas.size()) {
+
+			System.out.println(
+					"\nOpcion de tarjeta incorrecta.");
+
+			return;
+		}
+
+		TarjetaCredito tarjeta =
+				tarjetas.get(opcionTarjeta - 1);
 
 		if (tarjeta.getFechaCaducacion()
 				.isBefore(LocalDate.now())) {
@@ -136,8 +170,9 @@ public class Main {
 
 		mostrarProductosAhora20();
 
-		long codigo = leerLong(
-				"\nIngrese codigo del producto: ");
+		long codigo =
+				leerLong(
+						"\nIngrese codigo del producto: ");
 
 		Producto producto =
 				CollectionProducto
@@ -172,8 +207,9 @@ public class Main {
 			return;
 		}
 
-		int cantidad = leerEntero(
-				"Ingrese cantidad: ");
+		int cantidad =
+				leerEntero(
+						"Ingrese cantidad: ");
 
 		if (cantidad <= 0) {
 
@@ -296,11 +332,11 @@ public class Main {
 				+ tarjeta.getLimiteCompra());
 	}
 
-
 	public static void revisarComprasCliente() {
 
-		long dni = leerLong(
-				"\nIngrese DNI del cliente: ");
+		long dni =
+				leerLong(
+						"\nIngrese DNI del cliente: ");
 
 		Cliente cliente =
 				CollectionCliente.buscarCliente(dni);
@@ -333,7 +369,6 @@ public class Main {
 		}
 	}
 
-
 	public static void mostrarProductosAhora20() {
 
 		System.out.println(
@@ -349,11 +384,11 @@ public class Main {
 		}
 	}
 
-
 	public static void consultarStock() {
 
-		long codigo = leerLong(
-				"\nIngrese codigo del producto: ");
+		long codigo =
+				leerLong(
+						"\nIngrese codigo del producto: ");
 
 		Producto producto =
 				CollectionProducto
@@ -387,11 +422,11 @@ public class Main {
 				+ stock.getCantidad());
 	}
 
-
 	public static void revisarCreditosCliente() {
 
-		long dni = leerLong(
-				"\nIngrese DNI del cliente: ");
+		long dni =
+				leerLong(
+						"\nIngrese DNI del cliente: ");
 
 		Cliente cliente =
 				CollectionCliente.buscarCliente(dni);
@@ -427,7 +462,6 @@ public class Main {
 					"--------------------------------");
 		}
 	}
-
 
 	public static int leerEntero(String mensaje) {
 

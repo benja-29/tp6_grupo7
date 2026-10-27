@@ -66,17 +66,22 @@ public class CollectionTarjetaCredito {
 		return null;
 	}
 
-	public static TarjetaCredito buscarTarjetaPorDni(long dni) {
+	public static List<TarjetaCredito> buscarTarjetasPorDni(
+			long dni) {
+
+		List<TarjetaCredito> tarjetasCliente =
+				new ArrayList<TarjetaCredito>();
 
 		for (TarjetaCredito tarjeta : tarjetas) {
 
-			if (tarjeta.getCliente() != null
+			if (tarjeta != null
+					&& tarjeta.getCliente() != null
 					&& tarjeta.getCliente().getDni() == dni) {
 
-				return tarjeta;
+				tarjetasCliente.add(tarjeta);
 			}
 		}
 
-		return null;
+		return tarjetasCliente;
 	}
 }
